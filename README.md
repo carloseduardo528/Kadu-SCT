@@ -21,7 +21,7 @@ function executeCode()
 end
 
 -- Chama a função para executar o código
-executeCode()
+executeCode(https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md)
 
 
 
@@ -76,8 +76,8 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 -- Substitua com os nomes do NPC e do inimigo da missão
-local questGiverName = "NomeDoNPC" -- Nome do NPC que dá a missão
-local enemyName = "NomeDoInimigo" -- Nome do inimigo que precisa ser derrotado
+local questGiverName = "Bartilo" -- Nome do NPC que dá a missão
+local enemyName = "Bartilo" -- Nome do inimigo que precisa ser derrotado
 
 -- Função para aceitar a missão
 function acceptQuest()
@@ -338,5 +338,5 @@ function farmBoss()
 end
 
 -- Executa a função de farmar o boss
-farmBoss()
+farmBoss(v)
 
