@@ -1,5 +1,5 @@
-localcodeToExecute=loadstring(game:HttpGet("https://raw.githubusercontent.com/KaduSCT/Bloxfruits/main/KaduSCT"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/KaduSCT/Bloxfruits/main/KaduSCT"))())-- Seu código Lua aqui
+localcodeToExecute=loadstring(game:HttpGet("https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md"))())-- Seu código Lua aqui
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     
@@ -11,7 +11,7 @@ localcodeToExecute=loadstring(game:HttpGet("https://raw.githubusercontent.com/Ka
 ]]
 
 -- Função para executar o código
-function executeCode(2024 KaduSCT)
+function executeCode()
     local func, err = loadstring(codeToExecute)
     if func then
         func() -- Executa o código se não houver erro
