@@ -1,342 +1,586 @@
-localcodeToExecute=loadstring(game:HttpGet("https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md"))())-- Seu código Lua aqui
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    
-    print("2024 KaduSCT")
+local ScreenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+ScreenGui.Name = "SoulXploitLogo"
 
-    -- Exemplo de ação: Teleportar para um local específico
-    local destination = Vector3.new(0, 50, 0) -- Defina suas coordenadas
-    character:MoveTo(destination)
-]]
+local Logo = Instance.new("ImageLabel", ScreenGui)
+Logo.Size = UDim2.new(0, 300, 0, 100)
+Logo.Position = UDim2.new(0.5, -150, 0.1, 0) -- centralizado no topo
+Logo.BackgroundTransparency = 1
+Logo.Image = "rbxassetid://113422439338527"
 
--- Função para executar o código
-function executeCode()
-    local func, err = loadstring(codeToExecute)
-    if func then
-        func() -- Executa o código se não houver erro
-    else
-        warn("Erro ao carregar o código: " .. err) -- Mostra um aviso se ocorrer um erro
-    end
-end
+--[[ 
+    ███╗   ███╗████████╗███████╗██╗  ██╗███████╗███████╗
+    ████╗ ████║╚══██╔══╝██╔════╝██║  ██║██╔════╝██╔════╝
+    ██╔████╔██║   ██║   █████╗  ███████║█████╗  ███████╗
+    ██║╚██╔╝██║   ██║   ██╔══╝  ██╔══██║██╔══╝  ╚════██║
+    ██║ ╚═╝ ██║   ██║   ███████╗██║  ██║███████╗███████║
+    ╚═╝     ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝
 
--- Chama a função para executar o código
-executeCode(https://raw.githubusercontent.com/carloseduardo528/Kadu-SCT/refs/heads/main/README.md)
+    Script: NOT HUB X | Blox Fruits Script
+    Criado por: NOT HUB X
+]]--
 
+print("NOT HUB X | Script de Blox Fruits Carregado com Sucesso!")
 
+getgenv().SelectedMode = "Melee" -- Altere para: "Melee", "Sword", "Gun", "Blox Fruit"
+getgenv().AutoFarmMas = true
 
-local player = game.Players.LocalPlayer
-local gui = player:WaitForChild("Kadu SCT")
-
--- Cria a tela de loading
-local loadingScreen = Instance.new("ScreenGui")
-local loadingFrame = Instance.new("Frame")
-local loadingText = Instance.new("Kadu SCT")
-
-loadingScreen.Name = "LoadingScreen"
-loadingScreen.Parent = gui
-
-loadingFrame.Size = UDim2.new(1, 0, 1, 0)
-loadingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-loadingFrame.BackgroundTransparency = 0.5
-loadingFrame.Parent = loadingScreen
-
-loadingText.Size = UDim2.new(1, 0, 0.1, 0)
-loadingText.Position = UDim2.new(0, 0, 0.45, 0)
-loadingText.Text = "Carregando..."
-loadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
-loadingText.TextScaled = true
-loadingText.BackgroundTransparency = 1
-loadingText.Parent = loadingFrame
-
--- Função para mostrar a tela de loading
-function showLoading()
-    loadingScreen.Enabled = true
-end
-
--- Função para esconder a tela de loading
-function hideLoading()
-    loadingScreen.Enabled = false
-end
-
--- Função de exemplo para uma ação com loading
-function exampleAction()
-    showLoading()
-    wait(2) -- Simula uma ação que leva tempo (como aceitar missão ou farmar)
-    hideLoading()
-end
-
--- Chama a ação de exemplo
-exampleAction()
-
-
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
--- Substitua com os nomes do NPC e do inimigo da missão
-local questGiverName = "Bartilo" -- Nome do NPC que dá a missão
-local enemyName = "Bartilo" -- Nome do inimigo que precisa ser derrotado
-
--- Função para aceitar a missão
-function acceptQuest()
-    local npc = game.Workspace:FindFirstChild(questGiverName)
-    if npc then
-        local args = {
-            [1] = npc -- Nome do NPC que dá a missão
-        }
-        game:GetService("ReplicatedStorage").Remotes.Quest:InvokeServer(unpack(args))
-        print("Missão aceita de " .. questGiverName)
-    else
-        print("NPC não encontrado!")
-    end
-end
-
--- Função para atacar o inimigo da missão
-function attackEnemy(enemy)
-    humanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame + Vector3.new(0, 0, 5) -- Move para o inimigo
-    wait(0.5) -- Espera um pouco antes de atacar
-    game:GetService("VirtualUser"):CaptureController()
-    game:GetService("VirtualUser"):Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    wait(0.1) -- Tempo entre ataques
-end
-
--- Função principal de completar missões
-function completeQuest()
-    acceptQuest() -- Aceita a missão
-    while true do
-        local enemies = game.Workspace.Enemies:GetChildren()
-        for _, enemy in pairs(enemies) do
-            if enemy.Name == enemyName and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
-                attackEnemy(enemy)
-                wait(2) -- Espera um pouco antes de continuar
-            end
+function EquipSelectedTool()
+    local backpack = game.Players.LocalPlayer.Backpack
+    for _, tool in pairs(backpack:GetChildren()) do
+        if tool.ToolTip == getgenv().SelectedMode then
+            game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+            break
         end
-        wait(5) -- Espera um tempo antes de procurar por inimigos novamente
     end
 end
 
--- Executa a função de completar missões
-completeQuest()
+spawn(function()
+    while getgenv().AutoFarmMas do
+        pcall(function()
+            EquipSelectedTool()
+            for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                    local args = {
+                        [1] = "Attack",
+                        [2] = true
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.Combat:FireServer(unpack(args))
+                end
+            end
+        end)
+        wait(0.1)
+    end
+end)
 
+getgenv().Settings = {
+    AutoFarm = true,
+    UseSword = true, -- False para usar fruta
+    AutoBeliFruit = true
+}
 
+local Replicated = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local function fireSkill(key)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, key, false, game)
+end
 
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+-- Detectar em qual Sea você está
+function getCurrentSea()
+    local placeId = game.PlaceId
+    if placeId == 2753915549 then
+        return 1
+    elseif placeId == 4442272183 then
+        return 2
+    elseif placeId == 7449423635 then
+        return 3
+    else
+        return 0
+    end
+end
 
--- Função para aceitar uma missão
-function acceptQuest(questGiver)
-    local args = {
-        [1] = questGiver -- Nome do NPC que dá a missão
+-- Lista básica de inimigos por Sea (pode ser expandida com mais levels)
+local enemies = {
+    [1] = {
+        {Name="Bandit", Quest="BanditQuest1", Level=10, Pos=CFrame.new(1036, 16, 1547)},
+        {Name="Monkey", Quest="JungleQuest", Level=15, Pos=CFrame.new(-1602, 36, 152)},
+    },
+    [2] = {
+        {Name="Swan Pirate", Quest="Area2Quest", Level=775, Pos=CFrame.new(879, 122, 1235)},
+        {Name="Factory Staff", Quest="FactoryStaffQuest", Level=800, Pos=CFrame.new(302, 73, -1200)},
+    },
+    [3] = {
+        {Name="Pirate Millionaire", Quest="PiratePortQuest", Level=1500, Pos=CFrame.new(-373, 47, 5567)},
+        {Name="Dragon Crew Warrior", Quest="AmazonQuest", Level=1575, Pos=CFrame.new(6141, 29, -1542)},
     }
-    game:GetService("ReplicatedStorage").Remotes.Quest:InvokeServer(unpack(args))
+}
+
+-- Função para pegar alvo
+function getTarget()
+    local sea = getCurrentSea()
+    local level = player.Data.Level.Value
+    for i, mob in pairs(enemies[sea] or {}) do
+        if level >= mob.Level then
+            return mob
+        end
+    end
+    return nil
 end
 
--- Função para atacar o inimigo da missão
-function attackEnemy(enemy)
-    humanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame + Vector3.new(0, 0, 5) -- Move para o inimigo
-    wait(0.5) -- Espera um pouco antes de atacar
-    game:GetService("VirtualUser"):CaptureController()
-    game:GetService("VirtualUser"):Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    wait(0.1) -- Tempo entre ataques
-end
-
--- Função principal de completar missões
-function completeQuest()
-    while true do
-        local quests = player.PlayerGui.Main.QuestFrame.Quest -- Acesse a interface da missão
-        if quests and quests.Visible then
-            local currentQuest = quests.QuestName.Text -- Obtém o nome da missão atual
-            print("Missão Atual: " .. currentQuest)
-
-            -- Aceitar a missão de um NPC (substitua pelo nome do NPC que dá a missão)
-            local npcName = "NomeDoNPC" -- Substitua pelo nome do NPC que dá a missão
-            local questGiver = game.Workspace[npcName]
-            acceptQuest(questGiver)
-
-            -- Procura o inimigo da missão
-            local enemyName = "NomeDoInimigo" -- Substitua pelo nome do inimigo da missão
-            local enemies = game.Workspace.Enemies:GetChildren()
-            for _, enemy in pairs(enemies) do
-                if enemy.Name == enemyName and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
-                    attackEnemy(enemy)
-                    wait(2) -- Espera um pouco antes de continuar
+-- Auto Farm de Level
+spawn(function()
+    while Settings.AutoFarm do
+        pcall(function()
+            local target = getTarget()
+            if target then
+                -- Pega quest
+                Replicated.Remotes.CommF_:InvokeServer("StartQuest", target.Quest, 1)
+                wait(0.5)
+                -- Mata o inimigo
+                for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                    if mob.Name == target.Name and mob:FindFirstChild("HumanoidRootPart") then
+                        repeat
+                            player.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                            if Settings.UseSword then
+                                fireSkill("Z")
+                            else
+                                fireSkill("X")
+                            end
+                            wait(0.3)
+                        until mob.Humanoid.Health <= 0 or not mob.Parent
+                    end
                 end
             end
-        else
-            print("Nenhuma missão disponível.")
-        end
-        wait(5) -- Espera um tempo antes de procurar por missões novamente
+        end)
+        wait(1)
+    end
+end)
+
+-- Auto girar fruta
+spawn(function()
+    while Settings.AutoBeliFruit do
+        pcall(function()
+            Replicated.Remotes.CommF_:InvokeServer("GetFruits")
+            Replicated.Remotes.CommF_:InvokeServer("BuyFruit", "Random")
+        end)
+        wait(600) -- Gira a cada 10 min
+    end
+end)
+
+getgenv().AutoBoss = true
+getgenv().UseSword = true -- False para usar fruta
+
+local Replicated = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local bosses = {
+    -- Sea 1
+    "Gorilla King",
+    "Bobby",
+    "Yeti",
+    "Mob Leader",
+    "Vice Admiral",
+    "Warden",
+    "Swan",
+    -- Sea 2
+    "Fajita",
+    "Don Swan",
+    "Jeremy",
+    "Smoke Admiral",
+    -- Sea 3
+    "Stone",
+    "Island Empress",
+    "Kilo Admiral",
+    "Captain Elephant",
+    "Beautiful Pirate"
+}
+
+-- Ataca com tecla Z/X/C (editar se quiser)
+function useAttack()
+    local keys = {"Z", "X", "C"}
+    for _, key in pairs(keys) do
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, key, false, game)
+        wait(0.1)
     end
 end
 
--- Executa a função de completar missões
-completeQuest()
-
-
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-local weaponName = "Cursed Dual Katana" -- Nome da arma, certifique-se de que está correto
-
--- Função para usar a habilidade da Cursed Dual Katana
-function useCursedKatana()
-    local weapon = player.Backpack:FindFirstChild(weaponName) or character:FindFirstChild(weaponName)
-    if weapon then
-        -- Equipar a arma se não estiver equipada
-        if character:FindFirstChild(weaponName) == nil then
-            weapon.Parent = character -- Move a arma para o personagem
-        end
-
-        -- Usar habilidade da Cursed Dual Katana
-        local args = {
-            [1] = "1" -- Habilidade 1 da Cursed Dual Katana
-        }
-        game:GetService("ReplicatedStorage").Remotes.Combat:FireServer(unpack(args))
-        wait(0.5) -- Espera um pouco entre os usos das habilidades
-    end
-end
-
--- Função principal de uso automático da Cursed Dual Katana
-function autoCursedKatana()
-    while true do
-        local enemies = game.Workspace.Enemies:GetChildren() -- Obtém todos os inimigos
-        for _, enemy in pairs(enemies) do
-            if enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
-                humanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame + Vector3.new(0, 0, 5) -- Move para o inimigo
-                wait(0.5) -- Espera um pouco para evitar problemas de movimentação
-                useCursedKatana() -- Usa a habilidade da Cursed Dual Katana
-                wait(2) -- Espera um pouco antes de usar novamente
-            end
-        end
-        wait(1) -- Espera um segundo antes de procurar por inimigos novamente
-    end
-end
-
--- Executa a função de auto Cursed Dual Katana
-autoCursedKatana()
-
-
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
--- Função para abrir baús
-function openChest(chest)
-    if chest:IsA("Model") and chest:FindFirstChild("ClickDetector") then
-        humanoidRootPart.CFrame = chest.PrimaryPart.CFrame + Vector3.new(0, 0, 5) -- Move para o baú
-        wait(0.5) -- Espera um pouco para evitar problemas de interação
-        chest.ClickDetector:Fire() -- Tenta abrir o baú
-        wait(1) -- Espera um segundo antes de continuar
-    end
-end
-
--- Função principal de farm de baús
-function farmChests()
-    while true do
-        local chests = game.Workspace:GetChildren() -- Obtém todos os objetos no Workspace
-        for _, chest in pairs(chests) do
-            if chest.Name:find("Chest") then -- Verifica se o nome do objeto contém "Chest"
-                openChest(chest)
-                wait(1) -- Espera um pouco entre as aberturas
-            end
-        end
-        wait(5) -- Espera um pouco antes de procurar baús novamente
-    end
-end
-
--- Executa a função de farm de baús
-farmChests()
-
-
-local player = game.Players.LocalPlayer
-local camera = game.Workspace.CurrentCamera
-
--- Nome do Boss
-local bossName = "Gorilla King,Bobby,The Saw,Yeti,Mob Leader,Vice Admiral,Saber Expert,Warden,Chief Warden,Swan,Magma Admiral,Fishman Lord,Wysper,Thunder God,Cyborg(Boss),Ice Admiral" -- Substitua pelo nome do boss
-
--- Função para criar um ícone flutuante
-function createFloatingIcon(Kadu SCT)
-    -- Cria um BillboardGui
-    local billboardGui = Instance.new("BillboardGui")
-    billboardGui.Adornee = target
-    billboardGui.Size = UDim2.new(0, 100, 0, 50) -- Tamanho do ícone
-    billboardGui.StudsOffset = Vector3.new(0, 3, 0) -- Altura do ícone acima do alvo
-
-    -- Cria um Frame para o ícone
-    local iconFrame = Instance.new("Kadu SCT", billboardGui)
-    iconFrame.Size = UDim2.new(1, 0, 1, 0)
-    iconFrame.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Cor do ícone
-
-    -- Cria um Texto para o ícone
-    local textLabel = Instance.new("Kadu SCT", iconFrame)
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.Text = target.Name -- Nome do boss
-    textLabel.BackgroundTransparency = 1 -- Torna o fundo do texto transparente
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Cor do texto
-    textLabel.TextScaled = true -- Ajusta o texto ao tamanho do label
-
-    -- Configura o BillboardGui
-    billboardGui.Parent = game.Workspace
-
-    -- Atualiza a posição do ícone enquanto o boss existir
-    while target and target.Parent do
-        wait(0.1) -- Atualiza a cada 0.1 segundos
-        billboardGui.Adornee = target -- Mantém o ícone no boss
-    end
-
-    -- Remove o ícone quando o boss não existir mais
-    billboardGui:Destroy()
-end
-
--- Função principal
-function main()
-    while true do
-        for _, npc in pairs(game.Workspace.Enemies:GetChildren()) do
-            if npc.Name == bossName and npc:FindFirstChild("Humanoid") and npc.Humanoid.Health > 0 then
-                createFloatingIcon(npc)
-                break -- Para evitar criar múltiplos ícones para o mesmo boss
-            end
-        end
-        wait(5) -- Espera um tempo antes de procurar o boss novamente
-    end
-end
-
--- Executa a função principal
-main()
-
-
-                
-
-local bossName = "Gorilla King,Bobby,The Saw,Yeti,Mob Leader,Vice Admiral,Saber Expert,Warden,Chief Warden,Swan,Magma Admiral,Fishman Lord,Wysper,Thunder God,Cyborg(Boss),Ice Admiral" -- Substitua com o nome do boss que você quer farmar
-local bossPosition = Vector3.new(x, y, z) -- Substitua com as coordenadas do spawn do boss
-
--- Função para encontrar e derrotar o boss
-function farmBoss()
-    while true do
-        -- Procura pelo boss
-        for _, npc in pairs(game.Workspace.Enemies:GetChildren()) do
-            if npc.Name == bossName and npc:FindFirstChild("Humanoid") and npc.Humanoid.Health > 0 then
-                -- Se o boss for encontrado, mova o jogador até ele
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = npc.HumanoidRootPart.CFrame + Vector3.new(0, 10, 0)
-                
-                -- Ataque o boss
-                while npc.Humanoid.Health > 0 do
-                    game:GetService("VirtualUser"):CaptureController()
-                    game:GetService("VirtualUser"):Button1Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-                    wait(0.1) -- Intervalo entre ataques
+-- Farm loop
+spawn(function()
+    while getgenv().AutoBoss do
+        pcall(function()
+            for _, bossName in pairs(bosses) do
+                for _, enemy in pairs(workspace.Enemies:GetChildren()) do
+                    if enemy.Name == bossName and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                        repeat
+                            player.Character.HumanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                            if getgenv().UseSword then
+                                useAttack()
+                            end
+                            wait(0.5)
+                        until enemy.Humanoid.Health <= 0 or not enemy.Parent
+                    end
                 end
             end
+        end)
+        wait(2)
+    end
+end)
+
+-- GUI: Auto Farm de Haki, Obs V2 e Raça V4
+-- Desenvolvido para executores móveis e PC
+
+-- Biblioteca de UI leve
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Library = loadstring(game:HttpGet(("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua")))()
+local Window = Library.CreateLib("Blox Fruits Auto Farm - V4", "Ocean")
+
+-- Aba principal
+local Tab = Window:NewTab("Auto Farm")
+local Section = Tab:NewSection("Farm Geral")
+
+-- Auto Haki
+Section:NewToggle("Auto Farm Haki", "Upa o Haki batendo em inimigos", function(state)
+    getgenv().AutoHaki = state
+    if state then
+        spawn(function()
+            while getgenv().AutoHaki do
+                pcall(function()
+                    for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                        if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                            wait(0.3)
+                        end
+                    end
+                end)
+                wait(1)
+            end
+        end)
+    end
+end)
+
+-- Auto Observation V2
+Section:NewToggle("Auto Farm Obs V2", "Faz Perfect Dodge até liberar Observation V2", function(state)
+    getgenv().AutoObsV2 = state
+    local dodges = 0
+    if state then
+        spawn(function()
+            while getgenv().AutoObsV2 do
+                pcall(function()
+                    for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                        if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(3, 3, 3)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk", "Activate")
+                            wait(0.3)
+                            dodges = dodges + 1
+                            if dodges >= 500 then
+                                getgenv().AutoObsV2 = false
+                                Library:Notify("500 Perfect Dodges concluídos!", "Você pode evoluir para Observation V2")
+                            end
+                        end
+                    end
+                end)
+                wait(0.5)
+            end
+        end)
+    end
+end)
+
+-- Auto Mirage + Lua para Raça V4
+Section:NewToggle("Auto Mirage Moon", "Vai pra Mirage Island e observa a lua", function(state)
+    getgenv().AutoMirageMoon = state
+    if state then
+        spawn(function()
+            while getgenv().AutoMirageMoon do
+                pcall(function()
+                    local mirage = workspace:FindFirstChild("Mirage Island")
+                    if mirage then
+                        local top = mirage:FindFirstChild("Top") or mirage:FindFirstChildOfClass("Part")
+                        if top then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = top.CFrame + Vector3.new(0, 5, 0)
+                        end
+                    end
+                end)
+                wait(5)
+            end
+        end)
+    end
+end)
+
+-- GUI criada com sucesso
+Library:Notify("Pronto!", "Auto Farm GUI ativado com sucesso.")
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+
+-- Função para atacar o Draco
+function attackDraco()
+    local draco = nil
+    for _, obj in pairs(workspace.Enemies:GetChildren()) do
+        if obj:FindFirstChild("Humanoid") and obj.Name:lower():find("draco") then
+            draco = obj
+            break
         end
-        -- Aguarda o respawn do boss
-        wait(10) -- Aguarda 10 segundos antes de tentar encontrar o boss novamente
+    end
+
+    if draco and draco:FindFirstChild("HumanoidRootPart") then
+        repeat
+            pcall(function()
+                char.HumanoidRootPart.CFrame = draco.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game) -- Use "Z", "X", "C", ou "V" conforme sua fruta/estilo
+            end)
+            wait(0.5)
+        until not draco or draco.Humanoid.Health <= 0
     end
 end
 
--- Executa a função de farmar o boss
-farmBoss(v)
+-- Auto Farm loop
+while true do
+    pcall(function()
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            attackDraco()
+        end
+    end)
+    wait(2)
+end
+
+getgenv().AutoSeaEvent = true
+getgenv().UseSword = true -- Mude para false se quiser usar fruta
+
+local player = game.Players.LocalPlayer
+local rs = game:GetService("ReplicatedStorage")
+local vip = game:GetService("VirtualInputManager")
+
+-- Função para atacar
+function attack()
+    local keys = {"Z", "X", "C"}
+    for _, key in pairs(keys) do
+        vip:SendKeyEvent(true, key, false, game)
+        wait(0.2)
+    end
+end
+
+-- Detecta e farma todos os tipos de eventos do mar
+spawn(function()
+    while getgenv().AutoSeaEvent do
+        pcall(function()
+            for _, enemy in pairs(workspace.Enemies:GetChildren()) do
+                if string.find(enemy.Name, "Sea Beast") or string.find(enemy.Name, "Leviathan") or string.find(enemy.Name, "Ship") then
+                    if enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                        repeat
+                            player.Character.HumanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 40, 0)
+                            if getgenv().UseSword then
+                                attack()
+                            end
+                            wait(0.3)
+                        until not enemy or enemy.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end)
+        wait(2)
+    end
+end)
+
+getgenv().AutoFarmBones = true
+getgenv().UseSword = true -- Mude para false se quiser usar fruta
+
+local player = game.Players.LocalPlayer
+local enemies = workspace.Enemies
+local vinput = game:GetService("VirtualInputManager")
+
+function attack()
+    local keys = {"Z", "X", "C"}
+    for _, key in ipairs(keys) do
+        vinput:SendKeyEvent(true, key, false, game)
+        wait(0.2)
+    end
+end
+
+spawn(function()
+    while getgenv().AutoFarmBones do
+        pcall(function()
+            for _, mob in pairs(enemies:GetChildren()) do
+                local valid = mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid")
+                local isBoneMob = table.find({
+                    "Reborn Skeleton", "Living Zombie", "Demonic Soul", "Posessed Mummy"
+                }, mob.Name)
+
+                if valid and isBoneMob and mob.Humanoid.Health > 0 then
+                    repeat
+                        player.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                        if getgenv().UseSword then attack() end
+                        wait(0.3)
+                    until mob.Humanoid.Health <= 0 or not mob.Parent
+                end
+            end
+        end)
+        wait(1)
+    end
+end)
+
+getgenv().AutoCakePrince = true
+getgenv().UseSword = true -- False = fruta
+
+local player = game.Players.LocalPlayer
+local enemies = workspace.Enemies
+local vinput = game:GetService("VirtualInputManager")
+
+function attack()
+    for _, key in pairs({"Z", "X", "C"}) do
+        vinput:SendKeyEvent(true, key, false, game)
+        wait(0.2)
+    end
+end
+
+spawn(function()
+    while getgenv().AutoCakePrince do
+        pcall(function()
+            for _, boss in pairs(enemies:GetChildren()) do
+                if boss.Name == "Dough King" and boss:FindFirstChild("HumanoidRootPart") and boss.Humanoid.Health > 0 then
+                    repeat
+                        player.Character.HumanoidRootPart.CFrame = boss.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0)
+                        if getgenv().UseSword then attack() end
+                        wait(0.3)
+                    until not boss or boss.Humanoid.Health <= 0
+                end
+            end
+        end)
+        wait(1)
+    end
+end)
+
+Section:NewToggle("Auto Farm Baú", "Abre baús automaticamente para pegar itens", function(state)
+    getgenv().AutoFarmChest = state
+    spawn(function()
+        while getgenv().AutoFarmChest do
+            pcall(function()
+                for _, chest in pairs(workspace:GetChildren()) do
+                    if chest.Name == "Chest" and chest:FindFirstChild("HumanoidRootPart") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = chest.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                        if chest:FindFirstChild("ClickDetector") then
+                            fireclickdetector(chest.ClickDetector)
+                        end
+                        wait(1)
+                    end
+                end
+            end)
+            wait(2)
+        end
+    end)
+end)
+
+getgenv().AutoV4 = true
+
+local player = game.Players.LocalPlayer
+local vinput = game:GetService("VirtualInputManager")
+local enemies = workspace.Enemies
+
+-- Função para atacar
+function attack()
+    for _, key in ipairs({"Z", "X", "C"}) do
+        vinput:SendKeyEvent(true, key, false, game)
+        wait(0.2)
+    end
+end
+
+spawn(function()
+    while getgenv().AutoV4 do
+        pcall(function()
+            -- Verifica se a Trial de Raça V4 terminou
+            if game.Workspace:FindFirstChild("V4Trial") then
+                local trial = game.Workspace.V4Trial
+                if trial:FindFirstChild("Status") and trial.Status.Value == "Completed" then
+                    -- Matar todos os NPCs restantes da Trial
+                    for _, mob in pairs(enemies:GetChildren()) do
+                        if mob:FindFirstChild("HumanoidRootPart") and mob.Humanoid.Health > 0 then
+                            player.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                            attack()
+                            wait(0.3)
+                        end
+                    end
+                    -- Se precisar ir para outro lugar ou finalizar, adicione o código aqui
+                end
+            end
+        end)
+        wait(2)
+    end
+end)
+
+getgenv().AutoClick = true
+
+spawn(function()
+    while getgenv().AutoClick do
+        pcall(function()
+            local vim = game:GetService("VirtualInputManager")
+            vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+            wait(0.1) -- Pode diminuir para mais velocidade (ex: 0.05)
+        end)
+        wait()
+    end
+end)
+
+getgenv().AutoFindPrehistoric = true
+
+spawn(function()
+    while getgenv().AutoFindPrehistoric do
+        pcall(function()
+            local islands = workspace:IsDescendantOf(workspace) and workspace:GetChildren()
+            for _, island in pairs(islands) do
+                if island:IsA("Model") and island.Name:find("Prehistoric") then
+                    -- Teleportar para a ilha
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = island:GetModelCFrame() + Vector3.new(0, 10, 0)
+                    warn("Prehistoric Island encontrada!")
+                    getgenv().AutoFindPrehistoric = false
+                    break
+                end
+            end
+        end)
+        wait(5)
+    end
+end)
+
+getgenv().AutoKillGolem = true
+
+spawn(function()
+    while getgenv().AutoKillGolem do
+        pcall(function()
+            for _, enemy in pairs(workspace.Enemies:GetChildren()) do
+                if enemy.Name:lower():find("golem") and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                    local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    hrp.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+                    
+                    -- Fast Attack
+                    local args = {
+                        [1] = "Attack",
+                        [2] = true
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.Combat:FireServer(unpack(args))
+                end
+            end
+        end)
+        wait(0.1)
+    end
+end)
+
+local function TeleportToSea(seaNumber)
+    local args = {
+        [1] = "TravelSea",
+        [2] = seaNumber
+    }
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+end
+
+-- Exemplo: Teleportar para Sea 2
+TeleportToSea(2)
+
+-- Sea 1 = 1
+-- Sea 2 = 2
+-- Sea 3 = 3
+
+getgenv().AutoFarmMaestria = true
+
+spawn(function()
+    while getgenv().AutoFarmMaestria do
+        pcall(function()
+            for _, mob in pairs(workspace.Enemies:GetChildren()) do
+                if mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 and mob:FindFirstChild("HumanoidRootPart") then
+                    -- Teleporta para o mob
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = mob.HumanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+
+                    -- Ataca com espada ou arma equipada
+                    local args = {
+                        [1] = "Attack",
+                        [2] = true
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.Combat:FireServer(unpack(args))
+                end
+            end
+        end)
+        wait(0.1)
+    end
+end)
 
